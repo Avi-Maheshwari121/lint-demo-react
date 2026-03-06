@@ -1,0 +1,30 @@
+name: ESLint Check
+
+# Trigger this workflow whenever a Pull Request is opened against the 'main' branch
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  linting:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pull the code from the Pull Request branch
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js (Adjust the version if you are using Node 18 or 22)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Install dependencies securely
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Run the ESLint script from your package.json
+      - name: Run Linter
+        run: npm run lint
