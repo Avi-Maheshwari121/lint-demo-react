@@ -1,4 +1,4 @@
-name: ESLint Check
+name: CI Pipeline
 
 # Trigger this workflow whenever a Pull Request is opened against the 'main' branch
 on:
@@ -6,8 +6,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  linting:
-    name: Run ESLint
+  lint-and-test:
+    name: Run ESLint and Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Set up Node.js (Adjust the version if you are using Node 18 or 22)
+      # 2. Set up Node.js matching your local environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       # 3. Install dependencies securely
       - name: Install Dependencies
@@ -28,3 +28,7 @@ jobs:
       # 4. Run the ESLint script from your package.json
       - name: Run Linter
         run: npm run lint
+
+      # 5. Run the Unit Tests
+      - name: Run Tests
+        run: npm run test
